@@ -7,6 +7,7 @@ package AirportServlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginFormServlet extends HttpServlet {
 
+    @Override
+    public void init (ServletConfig config) throws ServletException
+    {
+        super.init(config);
+    }
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -27,8 +34,7 @@ public class LoginFormServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -54,9 +60,27 @@ public class LoginFormServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter sortie = response.getWriter();
+        sortie.println("<HTML><HEAD><TITLE>");
+        sortie.println("Réponse de la servlet à l'accès client");
+        sortie.println("</TITLE></HEAD><BODY>");
+        
+        if(request.getParameter("alreadySign")!= null && request.getParameter("alreadySign").equals("Sign") )
+        {
+            //verif du client
+            sortie.println("<p>DEJA INSCRIT<p>");
+        }
+        else
+        {
+            //creation du client
+            sortie.println("<p>ERREUR PAS INSCRIT<p>");
+        }
+        
+        sortie.println("<p>Méthode utilisée = " + request.getMethod() + "<p>");
+        sortie.println("</BODY></HTML>");
+        sortie.close();
     }
 
     /**

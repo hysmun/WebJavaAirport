@@ -11,6 +11,11 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <form method="GET" action="LoginFormServlet">
+            <P>Identifiant : <input type="text" name="identifiant" size=20></P>
+            <P>Mot de passe : <input type="password" name="password" size=20></P>
+            <P><input type="checkbox" name="alreadySign" value="Sign" checked> Déjà inscrit ?</P>
+            <P><input type="submit" value="se connecter"></P>
+        </form>
     </body>
 </html>
