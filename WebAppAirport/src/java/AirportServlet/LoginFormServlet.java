@@ -7,11 +7,14 @@ package AirportServlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -61,26 +64,26 @@ public class LoginFormServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        PrintWriter sortie = response.getWriter();
-        sortie.println("<HTML><HEAD><TITLE>");
-        sortie.println("Réponse de la servlet à l'accès client");
-        sortie.println("</TITLE></HEAD><BODY>");
+        HttpSession httpSes;
+        boolean connecter=false;
+        httpSes = request.getSession();
         
         if(request.getParameter("alreadySign")!= null && request.getParameter("alreadySign").equals("Sign") )
         {
             //verif du client
-            sortie.println("<p>DEJA INSCRIT<p>");
+            connecter = true;
         }
         else
         {
             //creation du client
-            sortie.println("<p>ERREUR PAS INSCRIT<p>");
+            connecter = true;
         }
-        
-        sortie.println("<p>Méthode utilisée = " + request.getMethod() + "<p>");
-        sortie.println("</BODY></HTML>");
-        sortie.close();
+        httpSes.setAttribute("Conneter", connecter?"true":"false");
+        httpSes.setAttribute("Identifiant", request.getParameter("identifiant"));
+        httpSes.setAttribute("password", request.getParameter("password"));
+        ServletContext sc = this.getServletContext();
+        RequestDispatcher rd = sc.getRequestDispatcher("/JPSInit.jsp");
+        rd.forward(request, response);
     }
 
     /**
