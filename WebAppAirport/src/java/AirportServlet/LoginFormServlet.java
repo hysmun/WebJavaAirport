@@ -82,7 +82,7 @@ public class LoginFormServlet extends HttpServlet {
         httpSes.setAttribute("Identifiant", request.getParameter("identifiant"));
         httpSes.setAttribute("password", request.getParameter("password"));
         ServletContext sc = this.getServletContext();
-        RequestDispatcher rd = sc.getRequestDispatcher("/JPSInit.jsp");
+        RequestDispatcher rd = sc.getRequestDispatcher("/JSPInit.jsp");
         rd.forward(request, response);
     }
 
