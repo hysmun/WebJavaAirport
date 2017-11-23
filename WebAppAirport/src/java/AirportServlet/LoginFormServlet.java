@@ -9,6 +9,7 @@ import database.utilities;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +29,7 @@ import javax.servlet.http.HttpSession;
 public class LoginFormServlet extends HttpServlet {
     
     utilities bdd;
+    ResultSet rs;
 
     @Override
     public void init (ServletConfig config) throws ServletException
@@ -60,17 +62,21 @@ public class LoginFormServlet extends HttpServlet {
         {
             try {
                 //verif du client
-                bdd.execute("SELECT * FROM TABLE WHERE identifiant LIKE (*) AND password LIKE (*)");
+                rs = bdd.query("SELECT COUNT(*) FROM client WHERE identifiant LIKE ('"+request.getParameter("identifiant")+"') AND password LIKE ('"+request.getParameter("password")+"')");
+                int val = rs.getInt(1);
+                if(val == 1)
+                    connecter = true;
+                else
+                    connecter = false;
             } catch (SQLException ex) {
                 Logger.getLogger(LoginFormServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-            connecter = true;
         }
         else
         {
             try {
                 //creation du client
-                bdd.update("INSERT INTO table(x,y,z) VALUES(x,y,z)");
+                bdd.update("INSERT INTO client(idClient,identifiant,password) VALUES('"+request.getParameter("identifiant")+"','"+request.getParameter("identifiant")+"','"+request.getParameter("password")+"')");
             } catch (SQLException ex) {
                 Logger.getLogger(LoginFormServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
