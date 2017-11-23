@@ -30,6 +30,7 @@ public class LoginFormServlet extends HttpServlet {
     
     utilities bdd;
     ResultSet rs;
+    int val;
 
     @Override
     public void init (ServletConfig config) throws ServletException
@@ -63,9 +64,13 @@ public class LoginFormServlet extends HttpServlet {
             try {
                 //verif du client
                 rs = bdd.query("SELECT COUNT(*) FROM client WHERE identifiant LIKE ('"+request.getParameter("identifiant")+"') AND password LIKE ('"+request.getParameter("password")+"')");
-                int val = rs.getInt(1);
+                val = rs.getInt(1);
                 if(val == 1)
+                {
                     connecter = true;
+                    rs = bdd.query("SELECT idClient FROM client WHERE identifiant LIKE ('"+request.getParameter("identifiant")+"') AND password LIKE ('"+request.getParameter("password")+"')");
+                    val = rs.getInt(1);
+                }
                 else
                     connecter = false;
             } catch (SQLException ex) {
@@ -77,7 +82,7 @@ public class LoginFormServlet extends HttpServlet {
             try {
                 //creation du client
                 rs = bdd.query("SELECT MAX(idClient) FROM client");
-                int val = rs.getInt(1);
+                val = rs.getInt(1);
                 val++;
                 bdd.update("INSERT INTO client(idClient,identifiant,password) VALUES('"+val+"','"+request.getParameter("identifiant")+"','"+request.getParameter("password")+"')");
             } catch (SQLException ex) {
@@ -85,6 +90,7 @@ public class LoginFormServlet extends HttpServlet {
             }
             connecter = true;
         }
+        httpSes.setAttribute("idClient", val);
         httpSes.setAttribute("Conneter", connecter?"true":"false");
         httpSes.setAttribute("Identifiant", request.getParameter("identifiant"));
         httpSes.setAttribute("password", request.getParameter("password"));
