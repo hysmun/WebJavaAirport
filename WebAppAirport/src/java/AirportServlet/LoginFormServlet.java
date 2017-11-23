@@ -76,7 +76,10 @@ public class LoginFormServlet extends HttpServlet {
         {
             try {
                 //creation du client
-                bdd.update("INSERT INTO client(idClient,identifiant,password) VALUES('"+request.getParameter("identifiant")+"','"+request.getParameter("identifiant")+"','"+request.getParameter("password")+"')");
+                rs = bdd.query("SELECT MAX(idClient) FROM client");
+                int val = rs.getInt(1);
+                val++;
+                bdd.update("INSERT INTO client(idClient,identifiant,password) VALUES('"+val+"','"+request.getParameter("identifiant")+"','"+request.getParameter("password")+"')");
             } catch (SQLException ex) {
                 Logger.getLogger(LoginFormServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
