@@ -64,11 +64,13 @@ public class LoginFormServlet extends HttpServlet {
             try {
                 //verif du client
                 rs = bdd.query("SELECT COUNT(*) FROM client WHERE identifiant LIKE ('"+request.getParameter("identifiant")+"') AND password LIKE ('"+request.getParameter("password")+"')");
+                rs.next();
                 val = rs.getInt(1);
                 if(val == 1)
                 {
                     connecter = true;
                     rs = bdd.query("SELECT idClient FROM client WHERE identifiant LIKE ('"+request.getParameter("identifiant")+"') AND password LIKE ('"+request.getParameter("password")+"')");
+                    rs.next();
                     val = Integer.parseInt(rs.getString(1));
                 }
                 else
@@ -82,6 +84,7 @@ public class LoginFormServlet extends HttpServlet {
             try {
                 //creation du client
                 rs = bdd.query("SELECT MAX(idClient) FROM client");
+                rs.next();
                 val = Integer.parseInt(rs.getString(1));
                 val++;
                 bdd.update("INSERT INTO client(idClient,identifiant,password) VALUES("+val+",'"+request.getParameter("identifiant")+"','"+request.getParameter("password")+"')");
