@@ -14,8 +14,8 @@
         <title>JSPInit Page</title>
     </head>
     <body>
-        <% int idClient = Integer.parseInt(request.getParameter("idClient"));%>
+        <% int idClient = Integer.parseInt(request.getAttribute("idClient").toString());%>
         <h1>Hello World! </h1>
-        <%=request.getParameter("identifiant")  %> <%=""+idClient%>
+        <%=request.getParameter("identifiant")  %> <p><%=""+idClient%></p>
     </body>
 </html>
