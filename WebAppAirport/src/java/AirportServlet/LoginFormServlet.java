@@ -93,15 +93,25 @@ public class LoginFormServlet extends HttpServlet {
             }
             connecter = true;
         }
-        httpSes.setAttribute("idClient", ""+val);
-        httpSes.setAttribute("Conneter", connecter?"true":"false");
-        httpSes.setAttribute("Identifiant", request.getParameter("identifiant"));
-        httpSes.setAttribute("password", request.getParameter("password"));
-        request.setAttribute("idClient", ""+val);
-        ServletContext sc = this.getServletContext();
-        RequestDispatcher rd = sc.getRequestDispatcher("/JSPInit.jsp");
+        if(connecter)
+        {
+            httpSes.setAttribute("idClient", ""+val);
+            httpSes.setAttribute("Conneter", connecter?"true":"false");
+            httpSes.setAttribute("Identifiant", request.getParameter("identifiant"));
+            httpSes.setAttribute("password", request.getParameter("password"));
+            request.setAttribute("idClient", ""+val);
+            ServletContext sc = this.getServletContext();
+            RequestDispatcher rd = sc.getRequestDispatcher("/JSPInit.jsp");
         
-        rd.forward(request, response);
+            rd.forward(request, response);
+        }
+        else
+        {
+            ServletContext sc = this.getServletContext();
+            RequestDispatcher rd = sc.getRequestDispatcher("/index.html");
+        
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
