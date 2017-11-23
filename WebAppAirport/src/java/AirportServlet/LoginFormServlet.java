@@ -76,7 +76,7 @@ public class LoginFormServlet extends HttpServlet {
         httpSes = request.getSession();
         
         try {
-            bdd = new utilities(2,"user","toor","127.0.0.1", 5500, "bd_airport");
+            bdd = new utilities(utilities.SQL,"user","toor","127.0.0.1", 5500, "bd_airport");
             out.println("BDD Access granted");
         } catch (Exception ex) {
             Logger.getLogger(LoginFormServlet.class.getName()).log(Level.SEVERE, null, ex);
