@@ -5,8 +5,12 @@
  */
 package AirportServlet;
 
+import database.utilities;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -21,6 +25,8 @@ import javax.servlet.http.HttpSession;
  * @author 'Toine
  */
 public class LoginFormServlet extends HttpServlet {
+    
+    utilities bdd;
 
     @Override
     public void init (ServletConfig config) throws ServletException
@@ -68,9 +74,20 @@ public class LoginFormServlet extends HttpServlet {
         boolean connecter=false;
         httpSes = request.getSession();
         
+        try {
+            bdd = new utilities(2,"user","toor","127.0.0.1", 5500, "bd_airport");
+        } catch (Exception ex) {
+            Logger.getLogger(LoginFormServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         if(request.getParameter("alreadySign")!= null && request.getParameter("alreadySign").equals("Sign") )
         {
-            //verif du client
+            try {
+                //verif du client
+                bdd.execute("SELECT * FROM TABLE WHERE identifiant LIKE (*) AND password LIKE (*)");
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginFormServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
             connecter = true;
         }
         else
