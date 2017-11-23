@@ -69,7 +69,7 @@ public class LoginFormServlet extends HttpServlet {
                 {
                     connecter = true;
                     rs = bdd.query("SELECT idClient FROM client WHERE identifiant LIKE ('"+request.getParameter("identifiant")+"') AND password LIKE ('"+request.getParameter("password")+"')");
-                    val = rs.getInt(1);
+                    val = Integer.parseInt(rs.getString(1));
                 }
                 else
                     connecter = false;
@@ -82,9 +82,9 @@ public class LoginFormServlet extends HttpServlet {
             try {
                 //creation du client
                 rs = bdd.query("SELECT MAX(idClient) FROM client");
-                val = rs.getInt(1);
+                val = Integer.parseInt(rs.getString(1));
                 val++;
-                bdd.update("INSERT INTO client(idClient,identifiant,password) VALUES('"+val+"','"+request.getParameter("identifiant")+"','"+request.getParameter("password")+"')");
+                bdd.update("INSERT INTO client(idClient,identifiant,password) VALUES("+val+",'"+request.getParameter("identifiant")+"','"+request.getParameter("password")+"')");
             } catch (SQLException ex) {
                 Logger.getLogger(LoginFormServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
