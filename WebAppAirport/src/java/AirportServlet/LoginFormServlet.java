@@ -8,6 +8,7 @@ package AirportServlet;
 import database.utilities;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -76,6 +77,7 @@ public class LoginFormServlet extends HttpServlet {
         
         try {
             bdd = new utilities(2,"user","toor","127.0.0.1", 5500, "bd_airport");
+            out.println("BDD Access granted");
         } catch (Exception ex) {
             Logger.getLogger(LoginFormServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
