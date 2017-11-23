@@ -94,7 +94,12 @@ public class LoginFormServlet extends HttpServlet {
         }
         else
         {
-            //creation du client
+            try {
+                //creation du client
+                bdd.update("INSERT INTO table(x,y,z) VALUES(x,y,z)");
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginFormServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
             connecter = true;
         }
         httpSes.setAttribute("Conneter", connecter?"true":"false");
