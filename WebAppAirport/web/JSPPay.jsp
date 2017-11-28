@@ -10,12 +10,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>JSP Page PAY</title>
     </head>
     <body>
-        <% int idClient = Integer.parseInt(request.getAttribute("idClient").toString()); %>
+        <% HttpSession hs = request.getSession(); %>
         <% utilities bdd = new utilities(utilities.SQL,"user","toor","127.0.0.1", 5500, "bd_airport"); %>
-        <h1>Bienvenue sur InpresAirport </h1>
-        <%=request.getParameter("identifiant")  %> <%=""+idClient%>
+        <h1>Bienvenue sur InpresAirport Pay</h1>
+        <%=hs.getAttribute("Identifiant")  %> <%=hs.getAttribute("idClient")%>
+        <form method="POST" action="JSPInit.jsp">
+            <P><input type="submit" value="Retour a la page d'acceuil"></P>
+        </form>
     </body>
 </html>

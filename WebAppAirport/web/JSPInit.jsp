@@ -17,7 +17,6 @@
         
     </head>
     <body>
-        <% int idClient = Integer.parseInt(request.getAttribute("idClient").toString());%>
         <% utilities bdd = new utilities(utilities.SQL,"user","toor","127.0.0.1", 5500, "bd_airport"); %>
         <% HttpSession hs = request.getSession(); %>
         <%
@@ -25,7 +24,7 @@
             {
                 %>
                 <h1>Bienvenue sur InpresAirport Init</h1>
-                <%=request.getParameter("identifiant")  %> <%=""+idClient%>
+                <%=hs.getAttribute("Identifiant")  %> <%=hs.getAttribute("idClient")%>
                 <form method="POST" action="JSPCaddie.jsp">
                     <P><input type="submit" value="Acheter des Tickets"></P>
                 </form>

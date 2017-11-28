@@ -85,8 +85,14 @@
             %>
             </tbody>
         </table>
+        <form method="POST" action="">
+            <P><input type="submit" value="Ajouter au caddie"></P>
+        </form>
         <form method="POST" action="JSPPay.jsp">
-            <P><input type="submit" value="Ajouter au caddie et procede a l'achat"></P>
+            <P><input type="submit" value="Passez au payement des tickets"></P>
+        </form>
+        <form method="POST" action="JSPInit.jsp">
+            <P><input type="submit" value="Retour a la page d'acceuil"></P>
         </form>
     </body>
 </html>
