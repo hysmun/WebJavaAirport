@@ -67,7 +67,7 @@
             <tr>
                 <td>
                     Quantité:<%=rs.getObject("idVols")%>
-                    <input type="number" value="0" name="quantity<%=rs.getObject("idVols")%>" min="0" max="<%=rs.getObject("nbrDispo")%>">
+                    <input type="number" value="0" name="quantity<%=rs.getObject("idVols").toString()%>" min="0" max="<%=rs.getObject("nbrDispo")%>">
                 </td>
                 <%
                 for(int i=2; i<7;i++)
@@ -85,7 +85,7 @@
             %>
             </tbody>
         </table>
-        <form method="POST" action="">
+        <form method="POST" action="AddCaddieServlet">
             <P><input type="submit" value="Ajouter au caddie"></P>
         </form>
         <form method="POST" action="JSPPay.jsp">

@@ -20,5 +20,8 @@
         <form method="POST" action="JSPInit.jsp">
             <P><input type="submit" value="Retour a la page d'acceuil"></P>
         </form>
+        <form method="POST" action="JSPCaddie.jsp">
+            <P><input type="submit" value="Continuez les achats"></P>
+        </form>
     </body>
 </html>

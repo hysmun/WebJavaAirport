@@ -92,7 +92,11 @@ public class utilities {
     {
         return instruc.execute(pupdate);
     }
-    
+    public boolean close() throws SQLException
+    {
+        con.close();
+        return true;
+    }
     //<editor-fold defaultstate="collapsed" desc="Getter">
     public String getNameConnection() {
         return nameConnection;

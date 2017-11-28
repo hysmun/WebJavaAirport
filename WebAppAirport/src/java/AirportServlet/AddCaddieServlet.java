@@ -8,9 +8,10 @@ package AirportServlet;
 import database.utilities;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.GenericServlet;
@@ -54,28 +55,16 @@ public class AddCaddieServlet extends HttpServlet {
             httpSes = request.getSession();
             int quant;
             int idTicket;
+            int idVols;
             int idClient = Integer.parseInt(httpSes.getAttribute("idClient").toString());
+            
+            LinkedList<Integer> li;
+            li = new LinkedList<Integer>();
             try {
                 bdd = new utilities(utilities.SQL,"user","toor","127.0.0.1", 5500, "bd_airport");
-                out.println("BDD Access granted");
+                System.out.println("BDD Access granted");
             } catch (Exception ex) {
                 Logger.getLogger(LoginFormServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            rs = bdd.query("SELECT max(idTicket) from ticket");
-            if(rs.next())
-                idTicket = Integer.parseInt(rs.getObject(1).toString());
-            else
-                idTicket = 1;
-            
-            rs = bdd.query("SELECT * FROM vols");
-            for(int i=0; rs.next(); i++)
-            {
-                quant = Integer.parseInt(request.getParameter("quantity"+rs.getObject("idVols").toString()));
-                bdd.update("UPDATE vols SET nbrDispo = nbrDispo-"+quant+"WHERE idVols = "+rs.getObject("idVols").toString());
-                for(int j=0; j<quant;j++)
-                {
-                    bdd.update("INSERT INTO ticket(idTicket, idClient, idVols, payer) VALUES("+idTicket++ +","+idClient+","+rs.getObject("idVols").toString()+",N)");
-                }
             }
             response.setContentType("text/html;charset=UTF-8");
             try (PrintWriter out = response.getWriter()) {
@@ -86,9 +75,44 @@ public class AddCaddieServlet extends HttpServlet {
                 out.println("<title>Servlet NewServlet</title>");            
                 out.println("</head>");
                 out.println("<body>");
-                out.println("<h1>Achat effectuer</h1>");
+                out.println("<h1>Achat effectue</h1>");
+                
+            
+                rs = bdd.query("SELECT max(idTicket) from ticket");
+                if(rs.next())
+                    idTicket = Integer.parseInt(rs.getObject(1).toString());
+                else
+                    idTicket = 1;
+
+                rs = bdd.query("SELECT * FROM vols");
+                for(int i=0; rs.next(); i++)
+                {
+                    li.add(Integer.parseInt(rs.getObject("idVols").toString()));
+                    out.println(""+li.get(i));
+                }
+                out.println("\n");
+                for(int i=0; i<li.size(); i++)
+                {    
+                    //quant = 4;
+                    idVols = li.get(i);
+                    Object tmp = request.getParameter("quantity"+idVols);
+                    if(tmp == null)
+                        quant = Integer.parseInt("0");
+                    else
+                        quant = Integer.parseInt(tmp.toString());
+                    out.println(""+quant);
+                    bdd.update("UPDATE vols SET nbrDispo = nbrDispo-"+quant+" WHERE idVols = "+idVols);
+                    for(int j=0; j<quant;j++)
+                    {
+                        bdd.update("INSERT INTO ticket(idTicket, idClient, idVols, payer) VALUES("+ ++idTicket +","+idClient+","+idVols+",'N')");
+                    }
+                }
+                bdd.close();
+            
                 out.println("</body>");
                 out.println("</html>");
+                out.println("<form method=\"POST\" action=\"JSPCaddie.jsp\"><P><input type=\"submit\" value=\"Continuez les achats\"></P></form>");
+                out.println("<form method=\"POST\" action=\"JSPPay.jsp\"><P><input type=\"submit\" value=\"proceder au payement\"></P></form>");
             }
         } catch (SQLException ex) {
             Logger.getLogger(AddCaddieServlet.class.getName()).log(Level.SEVERE, null, ex);
