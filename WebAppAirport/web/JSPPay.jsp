@@ -73,7 +73,7 @@
         %>
          </tbody>
         </table>
-        <form method="POST" action="/PayemetServlet">
+        <form method="POST" action="PayementServlet">
             <P>N° carte bancaire : <input type="text" name="identifiant" value="user" size=20></P>
             <P>Code carte bancaire : <input type="password" name="password" value="user" size=20></P>
             <P><input type="submit" value="Payer vos tickets"></P>
