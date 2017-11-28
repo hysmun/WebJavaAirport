@@ -90,14 +90,17 @@ public class AddCaddieServlet extends HttpServlet {
                     li.add(Integer.parseInt(rs.getObject("idVols").toString()));
                     out.println(""+li.get(i));
                 }
-                out.println("\n");
+                out.println("<br>");
                 for(int i=0; i<li.size(); i++)
                 {    
                     //quant = 4;
                     idVols = li.get(i);
                     Object tmp = request.getParameter("quantity"+idVols);
                     if(tmp == null)
+                    {
                         quant = Integer.parseInt("0");
+                        out.println("NULL");
+                    }
                     else
                         quant = Integer.parseInt(tmp.toString());
                     out.println(""+quant);
