@@ -93,10 +93,10 @@ public class LoginFormServlet extends HttpServlet {
             }
             connecter = true;
         }
-        if(connecter)
+        if(true)
         {
             httpSes.setAttribute("idClient", ""+val);
-            httpSes.setAttribute("Conneter", connecter?"true":"false");
+            httpSes.setAttribute("Connecter", connecter?"true":"false");
             httpSes.setAttribute("Identifiant", request.getParameter("identifiant"));
             httpSes.setAttribute("password", request.getParameter("password"));
             request.setAttribute("idClient", ""+val);
@@ -108,7 +108,8 @@ public class LoginFormServlet extends HttpServlet {
         else
         {
             ServletContext sc = this.getServletContext();
-            RequestDispatcher rd = sc.getRequestDispatcher("/index.html");
+            httpSes.setAttribute("Connecter", "false");
+            RequestDispatcher rd = sc.getRequestDispatcher("/JSPInit.jsp");
         
             rd.forward(request, response);
         }
