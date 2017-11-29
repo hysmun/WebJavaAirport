@@ -63,7 +63,7 @@ public class PayementServlet extends HttpServlet {
         }
         
         try {
-            bdd.update("UPDATE ticket SET payer = \"Y\" WHERE idVols = "+idClient+" ");
+            bdd.update("UPDATE ticket SET payer = \"Y\" WHERE idClient = "+idClient+" ");
             reussite = true;
         } catch (SQLException ex) {
             Logger.getLogger(PayementServlet.class.getName()).log(Level.SEVERE, null, ex);
