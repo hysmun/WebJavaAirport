@@ -42,6 +42,7 @@
     <body>
         <% HttpSession hs = request.getSession(); %>
         <% utilities bdd = new utilities(utilities.SQL,"user","toor","127.0.0.1", 5500, "bd_airport"); %>
+        
         <h1>Bienvenue sur InpresAirport Caddie</h1>
         <%=hs.getAttribute("Identifiant")  %> <%=hs.getAttribute("idClient")%>
         <br>
