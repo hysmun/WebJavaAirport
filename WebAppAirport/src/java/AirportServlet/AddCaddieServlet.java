@@ -53,6 +53,7 @@ public class AddCaddieServlet extends HttpServlet {
             HttpSession httpSes;
             boolean connecter=false;
             httpSes = request.getSession();
+            
             int quant;
             int idTicket;
             int idVols;
@@ -88,7 +89,6 @@ public class AddCaddieServlet extends HttpServlet {
                 for(int i=0; rs.next(); i++)
                 {
                     li.add(Integer.parseInt(rs.getObject("idVols").toString()));
-                    out.println(""+li.get(i));
                 }
                 out.println("<br>");
                 for(int i=0; i<li.size(); i++)
@@ -99,11 +99,9 @@ public class AddCaddieServlet extends HttpServlet {
                     if(tmp == null)
                     {
                         quant = Integer.parseInt("0");
-                        out.println("NULL");
                     }
                     else
                         quant = Integer.parseInt(tmp.toString());
-                    out.println(""+quant);
                     bdd.update("UPDATE vols SET nbrDispo = nbrDispo-"+quant+" WHERE idVols = "+idVols);
                     for(int j=0; j<quant;j++)
                     {

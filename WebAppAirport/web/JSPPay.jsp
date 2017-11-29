@@ -34,7 +34,38 @@
     </head>
     <body>
         <% HttpSession hs = request.getSession(); %>
-        <% utilities bdd = new utilities(utilities.SQL,"user","toor","127.0.0.1", 5500, "bd_airport"); %>
+        <% 
+            utilities bdd=null;
+            try {
+                    bdd = new utilities(utilities.SQL,"user","toor","127.0.0.1", 5500, "bd_airport");
+                } catch (Exception e) {
+                    %>
+                    <h1>Base de donner non accessible</h1>
+                    </body>
+                    </html>
+                <%
+                }
+             %>
+        <% 
+            try {
+            if(! Boolean.parseBoolean(hs.getAttribute("Connecter").toString())) 
+            {
+                %>
+                <h1>Vous n'etes pas connecter</h1>
+                <form method="POST" action="index.html"> <P><input type="submit" value="Retour a la page d'acceuil"></P> </form> </body></html>
+                <%
+                return;
+            }
+            }
+            catch(Exception e)
+            {
+                %>
+                <h1>Vous n'etes pas connecter</h1>
+                <form method="POST" action="index.html"><P><input type="submit" value="Retour a la page d'acceuil"></P> </form></body></html>
+                <%
+                return;
+            }
+        %>
         <h1>Bienvenue sur InpresAirport Pay</h1>
         <%=hs.getAttribute("Identifiant")  %> <%=hs.getAttribute("idClient")%>
         <table>

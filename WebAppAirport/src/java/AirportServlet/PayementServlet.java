@@ -50,7 +50,10 @@ public class PayementServlet extends HttpServlet {
         
         HttpSession httpSes;
         boolean reussite=false;
+        boolean connecter = false;
         httpSes = request.getSession();
+       
+        
         int idClient = Integer.parseInt(httpSes.getAttribute("idClient").toString());
         try {
             bdd = new utilities(utilities.SQL,"user","toor","127.0.0.1", 5500, "bd_airport");
